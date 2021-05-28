@@ -13,7 +13,7 @@ namespace API.Models
     {
         [Key]
         public int NIK { get; set; }
-        public int Education_id { get; set; }
+        public int Education_Id { get; set; }
         public virtual Account Account { get; set; }
         public virtual Education Education { get; set; }
     }

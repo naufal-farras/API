@@ -12,9 +12,9 @@ namespace API.Models
     public class University
     {
         [Key]
-        public int id { get; set; }
-        public string Name { get; set; }
-        public ICollection<Education> Education { get; set; }
+        public int University_Id { get; set; }
+        public string UniversityName { get; set; }
+        public virtual ICollection<Education> Education { get; set; }
 
 
     }

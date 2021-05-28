@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using API.Repository.Data;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace API
 {
@@ -21,16 +23,20 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+            .AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddScoped<PersonRepository>();
             services.AddScoped<AccountRepository>();
             services.AddScoped<ProfilingRepository>();
             services.AddScoped<UniversityRepository>();
             services.AddScoped<EducationRepository>();
             services.AddDbContext<MyContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("ApiContext")));
+            options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("ApiContext")));
 
         }
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

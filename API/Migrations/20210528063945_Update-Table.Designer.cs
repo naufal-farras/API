@@ -4,14 +4,16 @@ using API.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20210528063945_Update-Table")]
+    partial class UpdateTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Education", b =>
                 {
-                    b.Property<int>("Education_Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -45,15 +47,15 @@ namespace API.Migrations
                     b.Property<string>("GPA")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("University_Id")
+                    b.Property<string>("University_id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Universityid")
                         .HasColumnType("int");
 
-                    b.Property<int?>("University_Id1")
-                        .HasColumnType("int");
+                    b.HasKey("id");
 
-                    b.HasKey("Education_Id");
-
-                    b.HasIndex("University_Id1");
+                    b.HasIndex("Universityid");
 
                     b.ToTable("TB_M_Education");
                 });
@@ -93,30 +95,30 @@ namespace API.Migrations
                     b.Property<int>("NIK")
                         .HasColumnType("int");
 
-                    b.Property<int>("Education_Id")
+                    b.Property<int>("Education_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Education_Id1")
+                    b.Property<int?>("Educationid")
                         .HasColumnType("int");
 
                     b.HasKey("NIK");
 
-                    b.HasIndex("Education_Id1");
+                    b.HasIndex("Educationid");
 
                     b.ToTable("TB_T_Profiling");
                 });
 
             modelBuilder.Entity("API.Models.University", b =>
                 {
-                    b.Property<int>("University_Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("UniversityName")
+                    b.Property<string>("universityName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("University_Id");
+                    b.HasKey("id");
 
                     b.ToTable("TB_M_University");
                 });
@@ -136,7 +138,7 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.University", "University")
                         .WithMany("Education")
-                        .HasForeignKey("University_Id1");
+                        .HasForeignKey("Universityid");
 
                     b.Navigation("University");
                 });
@@ -145,7 +147,7 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.Education", "Education")
                         .WithMany("Profiling")
-                        .HasForeignKey("Education_Id1");
+                        .HasForeignKey("Educationid");
 
                     b.HasOne("API.Models.Account", "Account")
                         .WithOne("Profiling")
