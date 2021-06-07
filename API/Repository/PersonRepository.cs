@@ -30,7 +30,6 @@ namespace API.Repository
             {
                 return 0;
             }
-
         }
 
         public IEnumerable<Person> Get()

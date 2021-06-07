@@ -20,7 +20,14 @@ namespace API.Repository
             this.conn = conn;
             entities = conn.Set<Entity>();
         }
-     
+       
+
+        public int Insert(Entity entity)
+        {
+            entities.Add(entity);
+            var result = conn.SaveChanges();
+            return result;
+        }
         public int Delete(Key key)
         {
            
@@ -43,13 +50,6 @@ namespace API.Repository
         public Entity Get(Key key)
         {
             return entities.Find(key);
-        }
-
-        public int Insert(Entity entity)
-        {
-            entities.Add(entity);
-            var result = conn.SaveChanges();
-            return result;
         }
 
         public int Update(Entity entity)

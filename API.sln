@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{4A9C30B9-B94F-4BDC-87A9-E57C5D20C53E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{4A9C30B9-B94F-4BDC-87A9-E57C5D20C53E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StCORS", "StCORS\StCORS.csproj", "{EA186B31-5D91-45A8-95DA-C9693E63A758}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4A9C30B9-B94F-4BDC-87A9-E57C5D20C53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A9C30B9-B94F-4BDC-87A9-E57C5D20C53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A9C30B9-B94F-4BDC-87A9-E57C5D20C53E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA186B31-5D91-45A8-95DA-C9693E63A758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA186B31-5D91-45A8-95DA-C9693E63A758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA186B31-5D91-45A8-95DA-C9693E63A758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA186B31-5D91-45A8-95DA-C9693E63A758}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
