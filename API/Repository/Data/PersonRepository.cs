@@ -1,9 +1,11 @@
 ﻿using API.Context;
 using API.Models;
 using API.ViewModel;
+using MailKit.Net.Smtp;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -101,11 +103,85 @@ namespace API.Repository.Data
                 conn.Add(accountRole);
                 result = conn.SaveChanges();
 
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("ASP.NetCore", "hai.infodigital@gmail.com"));
+                message.To.Add(new MailboxAddress($"{registerVM.FirstName}", $"{registerVM.Email}"));
+                message.Subject = "Sucsess Registration Account";
+                message.Body = new TextPart("plain")
+                {
+                    Text = $"Dear, {registerVM.FirstName}" +
+                    $" Your Account Successfully Created."
+                };
+
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("hai.infodigital@gmail.com", "#Naufal1998");
+                    client.Send(message);
+                    client.Disconnect(true);
+
+                }
+
                 return result;
             }
             return result;
         }
 
+        //public int UpdateProfile(Person person)
+        //{
+        //    int update = 0;
+        //    if (person != null)
+        //    {
+        //        conn.Entry(person).State = EntityState.Modified;
+        //        conn.SaveChanges();
+        //        update = 1;
+        //    }
+        //    else
+        //    {
+        //        update = 0;
+        //    }
+        //    return update;
+        //}
+
+        public int UpdateProfile(RegisterVM registerVM)
+        {
+            var result = 0;
+
+            Profiling profiling = conn.Profiling.Find(registerVM.NIK);
+            Education education = conn.Education.Find(profiling.Educationid);
+            education.Universityid = registerVM.Universityid;
+            education.Degree = registerVM.Degree;
+            education.GPA = registerVM.GPA;
+            conn.Update(education);
+             result= conn.SaveChanges();
+                
+
+            Account account = conn.Account.Find(registerVM.NIK);
+            account.NIK = registerVM.NIK;
+            if (registerVM.Password.ToString() != "")
+            {
+                account.Password = BCrypt.Net.BCrypt.HashPassword(registerVM.Password.ToString());
+            
+            };
+            account.Profiling = profiling;
+            conn.Update(account);
+            result = conn.SaveChanges();
+     
+
+            Person person = conn.Persons.Find(registerVM.NIK);
+            person.NIK = registerVM.NIK;
+            person.LastName = registerVM.LastName;
+            person.Phone = registerVM.Phone;
+            person.BirthDate = registerVM.BirthDate;
+            person.Salary = registerVM.Salary;
+            person.Email = registerVM.Email;
+            person.Account = account;
+            conn.Update(person);
+            result = conn.SaveChanges();
+
+            return result;
+
+        }
 
         //public int Role(RegisterVM registerVM)
         //{
@@ -167,7 +243,6 @@ namespace API.Repository.Data
                           //where p.NIK = nik
                           select new RegisterVM
                           {
-
                               FirstName = p.FirstName,
                               LastName = p.LastName,
                               Phone = p.Phone,
@@ -183,25 +258,44 @@ namespace API.Repository.Data
                           }).ToList();
             return result.FirstOrDefault(a => a.NIK == nik);
         }
-
-        public int Login(RegisterVM registerVM)
+        public int DeleteProfilbyId(int nik)
         {
-            var result = 0;
 
+            var person = conn.Persons.Find(nik);
+            if (person != null)
+            {
+                conn.Remove(person);
+                conn.SaveChanges();
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
-            var cek = conn.Persons.FirstOrDefault(p => p.Email == registerVM.Email);
+        public int Login(LoginVM loginVM)
+        {
+            
+            var cek = conn.Persons.FirstOrDefault(p => p.Email == loginVM.Email);
+            if (cek==null)
+            {
+                return 404;
+            }
 
-            bool isValidPassword = BCrypt.Net.BCrypt.Verify(registerVM.Password, cek.Account.Password);
-
+            bool isValidPassword = BCrypt.Net.BCrypt.Verify(loginVM.Password, cek.Account.Password);
             if (isValidPassword)
             {
                 return 1;
             }
-            return result;
+            
+                return 401;
+            
+           
         }
-        public string GenerateToken(RegisterVM registerVM)
+        public string GenerateToken(LoginVM loginVM)
         {
-            var person = conn.Persons.Single(p => p.Email == registerVM.Email);
+            var person = conn.Persons.Single(p => p.Email == loginVM.Email);
             var ar = conn.AccountRole.Single(ar => ar.NIK == person.NIK);
 
             var claims = new[] {
@@ -209,18 +303,23 @@ namespace API.Repository.Data
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
 
-                    new Claim("Email", registerVM.Email.ToString()),
-                    new Claim("roles", ar.Role.RoleName.ToString())                
+                    new Claim("Email", loginVM.Email.ToString()),
+                    //new Claim("roles", ar.Role.RoleName.ToString())                
 
-                    //new Claim(ClaimTypes.Role, ar.Role.RoleName.ToString())                
-                    };          
+                    new Claim(ClaimTypes.Role, ar.Role.RoleName.ToString())
+                    };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);    
+            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
                 configuration["Jwt:Audience"], claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+
+
+
+
 
     }
 }

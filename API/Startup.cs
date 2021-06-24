@@ -28,6 +28,14 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(c =>
+            {
+                //c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44381"));
+
+                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44381").AllowAnyMethod().AllowCredentials().AllowAnyHeader());
+
+            });
+
             services.AddControllers()
             .AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
@@ -40,7 +48,7 @@ namespace API
             services.AddScoped<AccountRoleRepository>();
             services.AddDbContext<MyContext>(options =>
             options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("ApiContext")));
-
+            //jwt
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -51,7 +59,7 @@ namespace API
                     ValidateAudience = true,
                     ValidAudience = Configuration["Jwt:Audience"],
                     ValidIssuer = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };           
             });
 
@@ -60,11 +68,7 @@ namespace API
             //    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             //});
 
-            services.AddCors(c =>
-            {
-                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44381"));
-            });
-
+       
 
             services.AddSwaggerGen(swagger =>
             {

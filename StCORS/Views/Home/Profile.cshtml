@@ -1,0 +1,213 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+}
+
+<a class="btn btn-primary mb-2" data-toggle="modal" data-target="#createModal" href="">Insert</a>
+<table id="tableProf" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <td>No</td>
+            <td>Nama Depan</td>
+            <td>Email</td>
+            <td>Phone</td>
+            <td>Degree</td>
+
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody id="bodyProf">
+    </tbody>
+</table>
+
+
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Insert New Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="javascript:insertProfile()">
+                <div class="modal-body m-3">
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">FirstName</label>
+                            <input type="text" class="form-control is-valid" id="firstname" required placeholder="FirstName">
+
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Last Name</label>
+                            <input type="text" class="form-control" id="lastname" required placeholder="LastName">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Email</label>
+                            <input type="email" class="form-control" id="email" required placeholder="Email">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Password</label>
+                            <input type="password"  minlength="6" maxlength="20" class="form-control" id="password" required placeholder="Password">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Phone</label>
+                            <input type="number" class="form-control" id="phone" required placeholder="Phone">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">BirthDate</label>
+                            <input type="date" class="form-control" id="birthdate" required placeholder="BirthDate">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Salary</label>
+                            <input type="number" class="form-control" id="salary" required placeholder="Salary">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">Degree</label>
+                            <input type="text" class="form-control" id="degree" required placeholder="Degree">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">GPA</label>
+                            <input type="number" class="form-control" id="gpa" required placeholder="GPA">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4">University ID</label>
+                            <input type="number" class="form-control" id="universityid" required placeholder="UniversityID">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Detail Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:updateProfile()">
+                    <div class="modal-body m-3">
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">FirstName</label>
+                                <input type="text" class="form-control " id="nik" hidden>
+
+                                <input type="text" class="form-control " id="firstname" required placeholder="FirstName">
+
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Last Name</label>
+                                <input type="text" class="form-control" id="lastname" required placeholder="LastName">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Email</label>
+                                <input type="email" class="form-control" disabled id="email" required placeholder="Email">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Password</label>
+                                <input type="password" onblur="checkLength(this)" minlength="6" maxlength="20" disabled class="form-control" id="password" required placeholder="Password">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Phone</label>
+                                <input type="number" class="form-control" id="phone" required placeholder="Phone">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">BirthDate</label>
+                                <input type="date" class="form-control" id="birthdate" required placeholder="BirthDate">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Salary</label>
+                                <input type="number" class="form-control" id="salary" required placeholder="Salary">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">Degree</label>
+                                <input type="text" class="form-control" id="degree" required placeholder="Degree">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">GPA</label>
+                                <input type="number" class="form-control" id="gpa" required placeholder="GPA">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputEmail4">University ID</label>
+                                <input type="number" class="form-control" id="universityid" required placeholder="UniversityID">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+
+                    </div>
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>*@
+
+
+
+
+@section scripts{
+    <script src="~/js/profile.js" asp-append-version="true"></script>
+}

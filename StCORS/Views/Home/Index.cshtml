@@ -1,19 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout2.cshtml"; 
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
-<script  >
-   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
 
     $.ajax({
-       
-       url: "https://localhost:44345/api/person/GetAllProfile",
-       success: function (result) {
-           console.log(result);
-    }
+
+        url: "https://localhost:44345/api/person/GetAllProfile",
+        success: function (result) {
+            console.log(result);
+        }
     })
-</script> 
+</script>
+

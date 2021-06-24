@@ -1,4 +1,5 @@
 ﻿using API.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,9 +19,8 @@ namespace API.ViewModel
         public virtual Account Account { get; set; }
         //[JsonIgnore]
         public int Salary { get; set; }
-
-        public string Password { get; set; }
-
+        //[JsonIgnore]
+        public string Password { get; set; }      
         public string Degree { get; set; }
         public string GPA { get; set; }
         public int Universityid { get; set; }

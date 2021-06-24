@@ -19,7 +19,7 @@ namespace API.Models
         public string Email { get; set; }
         public int Salary { get; set; }
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public virtual Account Account { get; set; }
 
       

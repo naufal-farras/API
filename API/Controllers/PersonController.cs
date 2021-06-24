@@ -2,10 +2,12 @@
 using API.Models;
 using API.Repository.Data;
 using API.ViewModel;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,40 +30,69 @@ namespace API.Controllers
          
         }
         [HttpPost("Register")]
+        [EnableCors("AllowOrigin")]
+
         public ActionResult Register(RegisterVM registerVM)
         {
             var post = repo.Register(registerVM);
             if(post > 0)
-            {
-                return Ok("Data Berhasil Di Daftarkan");
+            {           
+                    return Ok("Data Berhasil Di Daftarkan");
             }
             else
             {
                 return BadRequest("Data Gagal di Masukan");
             }
         }
-        [Route("Login")]
-        [HttpPost]
-        public ActionResult Login(RegisterVM registerVM)
+
+        [EnableCors("AllowOrigin")]
+        [HttpPut("UpdateProfile")]
+        public ActionResult UpdateProfile(RegisterVM registerVM)
         {
-            var login = repo.Login(registerVM);
-            if (login > 0)
+            var update = repo.UpdateProfile(registerVM);
+            if (update > 0)
             {
-                return Ok($"Login Berhasil \n Token : {repo.GenerateToken(registerVM)}");
+                return Ok("Data Berhasil Di Update");
             }
             else
             {
-                return BadRequest("Email/Password Salah");
+                return BadRequest("Data Gagal di Update");
+            }
+        }
+        [Route("Login")]
+        [HttpPost]
+        public ActionResult Login(LoginVM loginVM)
+        {
+            var login = repo.Login(loginVM);
+            if (login == 404)
+            {
+                return BadRequest("Email Tidak Ditemukan!");
+            }
+            else if (login == 401)
+            {
+                return BadRequest("Password Salah");
+            }
+            else if (login == 1)
+            {
+                //return Ok($"Login Berhasil \n Token : {repo.GenerateToken(loginVM)}");
+                return Ok(new JWTokenVM { Token = repo.GenerateToken(loginVM), Messages ="Login Sukses" });
+
+
+            }
+            else 
+            {
+                return BadRequest("Login Gagal");
             }
 
         }
 
         //[Authorize(Roles = "Admin")]
         [Route("GetAllProfile")]
-        [HttpGet]
         [EnableCors("AllowOrigin")]
+        [HttpGet]
 
-        public ActionResult GetAllProfile(string token)
+        //public ActionResult GetAllProfile(string token)
+        public ActionResult GetAllProfile()
         {
             
             var post = repo.GetAllProfile();
@@ -75,7 +106,8 @@ namespace API.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [EnableCors("AllowOrigin")]
         [HttpGet("GetProfilbyId/{nik}")]
         public ActionResult GetProfilbyId(int nik)
         {
@@ -88,6 +120,19 @@ namespace API.Controllers
                 return NotFound("Data Tidak Ditemukan");
         }
 
+
+        [EnableCors("AllowOrigin")]
+        [HttpPost("DeleteProfilbyId/{nik}")]
+        public ActionResult DeleteProfilbyId(int nik)
+        {
+            var del = repo.DeleteProfilbyId(nik);
+            if (del != 0)
+            {
+                return Ok(del);
+            }
+            else
+                return NotFound("Data Tidak Ditemukan");
+        }
 
 
         //[HttpPost("Login")]
@@ -104,8 +149,6 @@ namespace API.Controllers
         //    }
 
         //}
-
-
 
 
     }

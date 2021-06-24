@@ -4,14 +4,14 @@
     "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\StCORS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\StCORS.csproj": {
+    "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\StCORS.csproj",
-        "projectName": "StCORS",
-        "projectPath": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\StCORS.csproj",
+        "projectUniqueName": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\API\\API.csproj",
+        "projectName": "API",
+        "projectPath": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\API\\API.csproj",
         "packagesPath": "C:\\Users\\WIN 10 TRIAL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\obj\\",
+        "outputPath": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\WIN 10 TRIAL\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,127 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.2, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[2.13.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.12, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Abstractions": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational.Design": {
+              "target": "Package",
+              "version": "[1.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[5.6.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\StCORS.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\StCORS.csproj",
+        "projectName": "StCORS",
+        "projectPath": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\StCORS.csproj",
+        "packagesPath": "C:\\Users\\WIN 10 TRIAL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\StCORS\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\WIN 10 TRIAL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\API\\API.csproj": {
+                "projectPath": "C:\\Users\\WIN 10 TRIAL\\Desktop\\Bootcamp Metrodata\\SourceCode C#\\API\\API\\API.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "MailKit": {
+              "target": "Package",
+              "version": "[2.13.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.12, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.1.4, )"

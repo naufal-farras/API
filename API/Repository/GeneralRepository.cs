@@ -37,8 +37,7 @@ namespace API.Repository
                 conn.Remove(entity);
               var  result=  conn.SaveChanges();
                 return result;
-            }
-                
+            }               
             throw new ArgumentNullException("Entity");
         }  
 
